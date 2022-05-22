@@ -7,7 +7,6 @@ int main(int argc, char const* argv[]) {
 
     addBook(dauSachs, "111", "Holmes", "Conan", "trinh tham", 600, 1950, trinhTham);
     addBook(dauSachs, "121", "Holmes 2", "Conan", "trinh tham", 500, 1950, trinhTham);
-
     addBook(dauSachs, "311", "Holmes 3", "Conan", "trinh tham", 1000, 1950, trinhTham);
 
     printf("Cac sach da them:\n");
