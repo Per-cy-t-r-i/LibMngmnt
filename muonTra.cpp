@@ -1,4 +1,5 @@
 #include "Sach.cpp"
+using namespace std;
 
 struct date {
     int day;
@@ -7,7 +8,7 @@ struct date {
 };
 
 struct sachMuon {
-    std::string bookID;
+    string bookID;
 
     date borrowDate;
     date returnDate;

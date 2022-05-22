@@ -1,7 +1,7 @@
 #include "dauSach.cpp"
 #include "docGia.cpp"
 
-int main(int argc, char const* argv[]) {
+int main() {
     DSdauSach* dauSachs = new DSdauSach();
     danhMucSach* trinhTham = new danhMucSach();
 

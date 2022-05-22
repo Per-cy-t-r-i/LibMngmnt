@@ -3,15 +3,14 @@
 #include <string>
 
 #include "danhMucSach.cpp"
-
-using std::string;
+using namespace std;
 
 struct dauSach {
     // Thông tin của đầu sách gồm ISBN, tên, tác giả, thể loại, số trang, năm phát hành
-    std::string ISBN;
-    std::string bookName;
-    std::string bookAuth;
-    std::string bookCategory;
+    string ISBN;
+    string bookName;
+    string bookAuth;
+    string bookCategory;
 
     int bookPages;
     int publishYear;
@@ -31,7 +30,14 @@ struct DSdauSach {
 };
 
 // Nhập thông tin đầu sách
-void addBook(DSdauSach* headList, string ISBN, string bookName, string bookAuth, string bookCategory, int bookPages, int publishYear, danhMucSach* bookList) {
+void addBook(DSdauSach* headList,
+             string ISBN,
+             string bookName,
+             string bookAuth,
+             string bookCategory,
+             int bookPages,
+             int publishYear,
+             danhMucSach* bookList) {
     //  Cấp phát bộ nhớ động cho 1 đầu sách
     dauSach* newBook = new dauSach();
 

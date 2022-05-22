@@ -1,45 +1,60 @@
 #include <stdio.h>
 
 #include "muonTra.cpp"
+using namespace std;
 
+// Stuct chứa thông tin của 1 độc giả
 struct docGia {
-    std::string lastName;
-    std::string firstName;
-
+    // Họ
+    string lastName;
+    // Tên
+    string firstName;
+    // Giới tính -> 0: nữ || 1: nam
     bool gender;
-    // 0: nữ || 1: nam
-
+    // Trạng thái thẻ độc giả -> 0: bị khoá || 1: được mượn
     int cardState;
-    // 0: bị khoá || 1: được mượn
 
+    // DS các quyển sách đã mượn, trả
     DSmuonTra borrowList;
 };
 
 // Node cho cây tìm kiếm nhị phân
 struct nodeDocGia {
+    // Thông tin của 1 độc giả
     docGia* data;
+    // ID của độc giả
     int ID;
 
+    // Node con bên trái
     nodeDocGia* left = nullptr;
+    // Node con bên phải
     nodeDocGia* right = nullptr;
-
+    // Node cha
     nodeDocGia* parent = nullptr;
 };
 
-// Cây tìm kiếm nhị phân
+// Cây tìm kiếm nhị phân tự cân bằng (AVL Tree)
 struct DStheDocGia {
+    // Node gốc
     nodeDocGia* root = nullptr;
-
+    // Số lượng các node -> Số lượng độc giả
     int size = 0;
 };
 
 // Tìm kiếm một thẻ độc giả trong danh sách theo ID
 nodeDocGia* find(DStheDocGia* MemberTree, int ID) {
+    // Lấy ra node gốc
     nodeDocGia* ptr = MemberTree->root;
 
+    // Duyệt cây đến khi hết cây (duyệt đến node lá)
+    // Hoặc khi tìm thấy ID cần tìm
     while (ptr != nullptr && ptr->ID != ID) {
+        // So sánh ID cần tìm với ID của nút hiện tại
+        // Nếu ID cần tìm nhỏ hơn -> Tìm ở cây con bên trái
         if (ptr->ID > ID)
+            // Duyệt sang trái
             ptr = ptr->left;
+        // Ngược lại thì duyệt sang bên phải
         else
             ptr = ptr->right;
     }
@@ -50,14 +65,20 @@ nodeDocGia* find(DStheDocGia* MemberTree, int ID) {
 // Chỉnh sửa: thêm/ xoá/ điều chỉnh thông tin một thẻ độc giả trong danh sách
 
 // Thêm một thẻ vào danh sách
-void addMember(DStheDocGia* MemberTree, std::string lastName, std::string firstName, bool gender) {
+void addMember(DStheDocGia* MemberTree, string lastName, string firstName, bool gender) {
+    // Cấp phát bộ nhớ động cho 1 node độc giả
     nodeDocGia* newNode = new nodeDocGia();
+
+    // Cấp phát động thông tin của độc giả
     newNode->data = new docGia();
+
+    // Nhập thông tin cho độc giả này
     newNode->data->lastName = lastName;
     newNode->data->firstName = firstName;
     newNode->data->gender = gender;
     newNode->data->cardState = 1;
 
+    // Nhập thông tin cho node độc giả
     newNode->ID = MemberTree->size + 1;
     newNode->left = nullptr;
     newNode->right = nullptr;
@@ -100,7 +121,7 @@ void addMember(DStheDocGia* MemberTree, std::string lastName, std::string firstN
 }
 
 // Điều chỉnh thông tin thẻ
-void HieuChinh(DStheDocGia* MemberTree, int ID, int cardState, std::string lastName, std::string firstName) {
+void HieuChinh(DStheDocGia* MemberTree, int ID, int cardState, string lastName, string firstName) {
     nodeDocGia* mem = find(MemberTree, ID);
     if (mem != nullptr) {
         mem->data->cardState = cardState;
@@ -144,6 +165,7 @@ nodeDocGia* successor(DStheDocGia* MemberTree, int ID) {
     return nullptr;
 }
 
+// Xóa thẻ khỏi cây
 void xoaThe(DStheDocGia* MemberTree, int ID) {
     nodeDocGia* discard = find(MemberTree, ID);
     // Neu ID co trong cay, ta xoa node co chua ID
@@ -203,7 +225,7 @@ void xoaThe(DStheDocGia* MemberTree, int ID) {
     }
 }
 
-// In các độc giả theo thứ tự của mã thẻ
+// In các độc giả theo thứ tự của mã thẻ -> Duyệt cây
 void printMember(DStheDocGia* Tree, nodeDocGia* node) {
     if (node == nullptr) return;
     printMember(Tree, node->left);
