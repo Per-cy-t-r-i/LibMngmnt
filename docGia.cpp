@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <vector>
 
 #include "muonTra.cpp"
 using namespace std;
@@ -237,4 +238,16 @@ void printMember(DStheDocGia* Tree, nodeDocGia* node) {
 
 void printMember(DStheDocGia* Tree) {
     printMember(Tree, Tree->root);
+}
+
+// Lấy danh sách độc giả vào mảng
+void getMembers(DStheDocGia* Tree, nodeDocGia* node, vector<docGia*>& arr) {
+    if (node == nullptr) return;
+    getMembers(Tree, node->left, arr);
+    arr.push_back(node -> data);
+    getMembers(Tree, node->right, arr);
+}
+
+void getMembers(DStheDocGia* Tree, vector<docGia*>& arr) {
+    getMembers(Tree, Tree->root, arr);
 }

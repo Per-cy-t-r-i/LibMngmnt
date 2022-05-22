@@ -1,6 +1,7 @@
 #include "dauSach.cpp"
 #include "docGia.cpp"
 #include <iostream>
+#include <map>
 
 using std::cin;
 using std::cout;
@@ -58,9 +59,30 @@ void xoaThe(){
 	cout << "The da duoc xoa! \n";
 }
 
+bool cmpName(docGia* p1, docGia* p2){
+	if (p1 -> firstName != p2 -> firstName)
+		return p1 -> firstName.compare(p2 -> firstName) < 0;
+	return p1 -> lastName.compare(p2 -> lastName) < 0;
+}
+
 void printDSDG(){
-	cout << "__DANH SACH DOC GIA__ \n";
-	printMember(&DSDG);
+	int choice;
+	cout << "Chon 0 de in theo ID, 1 de in theo ten: "; cin >> choice;
+	if (choice == 0){
+		printMember(&DSDG);
+		return;
+	}
+
+	vector<docGia*> arr;
+	getMembers(&DSDG, arr);
+	sort(arr.begin(), arr.end(), cmpName);
+	printf("| %10s | %10s | %4s |\n", "Ho", "Ten", "Phai");
+	for (int i = 0; i < arr.size(); i++){
+		printf("| %10s | %10s | %4s |\n", arr[i] -> lastName.c_str(), 
+										arr[i] -> firstName.c_str(), 
+										arr[i] -> gender ? "Nam":"Nu");
+	}
+
 }
 
 void themDauSach(){
@@ -112,10 +134,25 @@ void timSach(){
 	inTTSach(timSachTheoTen(&DSDS ,bookName));
 }
 
+bool cmpBook(dauSach* book1, dauSach* book2){
+	return book1 -> bookName.compare(book2 -> bookName) < 0;
+}
+
 void printDSDS(){
+	map <string, vector<dauSach*> > mp;
 	for (int i = 0; i < DSDS.bookCount; i++){
-		cout << DSDS.list[i] -> bookName << "\n";
+		dauSach* book = DSDS.list[i];
+		mp[book -> bookCategory].push_back(book);
 	}
+
+	for (auto x : mp){
+		sort(x.second.begin(), x.second.end(), cmpBook);
+		cout << x.first << "\n";
+		printf("| %15s | %15s | %4s |\n", "Ten sach", "Tac gia", "Nam");
+		for (dauSach* b : x.second)
+			printf("| %15s | %15s | %4d |\n", b -> bookName.c_str(), b -> bookAuth.c_str(), b -> publishYear);
+	}
+
 }
 
 void MuonSach(){
