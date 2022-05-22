@@ -3,11 +3,10 @@
 
 int main() {
     DSdauSach* dauSachs = new DSdauSach();
-    danhMucSach* trinhTham = new danhMucSach();
 
-    addBook(dauSachs, "111", "Holmes", "Conan", "trinh tham", 600, 1950, trinhTham);
-    addBook(dauSachs, "121", "Holmes 2", "Conan", "trinh tham", 500, 1950, trinhTham);
-    addBook(dauSachs, "311", "Holmes 3", "Conan", "trinh tham", 1000, 1950, trinhTham);
+    addBook(dauSachs, "111", "Holmes", "Conan", "trinh tham", 600, 1950);
+    addBook(dauSachs, "121", "Holmes 2", "Conan", "trinh tham", 500, 1950);
+    addBook(dauSachs, "311", "Holmes 3", "Conan", "trinh tham", 1000, 1950);
 
     printf("Cac sach da them:\n");
     for (int i = 0; i < dauSachs->bookCount; i++) {
@@ -29,6 +28,10 @@ int main() {
     xoaThe(DSThe, 1);
     printf("Cac doc gia trong danh sach\n");
     printMember(DSThe);
+
+dauSach* tmp = timSachTheoTen(dauSachs, "Holmes");
+printf("%d\n", tmp -> bookList == nullptr);
+addBook(tmp -> bookList, 1, "Ngan 2, Ke 1", tmp -> ISBN);
 
     // Tim sach co ten Holmes
     printf("Tim sach co ten Holmes\n");

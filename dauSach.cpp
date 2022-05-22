@@ -15,8 +15,6 @@ struct dauSach {
     int bookPages;
     int publishYear;
 
-    int ID;
-
     // Một đầu sách có nhiều quyển sách
     danhMucSach* bookList;
 };
@@ -36,8 +34,7 @@ void addBook(DSdauSach* headList,
              string bookAuth,
              string bookCategory,
              int bookPages,
-             int publishYear,
-             danhMucSach* bookList) {
+             int publishYear) {
     //  Cấp phát bộ nhớ động cho 1 đầu sách
     dauSach* newBook = new dauSach();
 
@@ -49,13 +46,7 @@ void addBook(DSdauSach* headList,
     newBook->bookPages = bookPages;
     newBook->publishYear = publishYear;
 
-    newBook->bookList = bookList;
-    int ID = headList->bookCount;
-
-    newBook->ID = headList->bookCount;
-
-    // Nhập xong thì thêm sách vào danh sách đầu sách
-    addBook(bookList, newBook->ID);
+    newBook->bookList = new danhMucSach();
 
     headList->list[headList->bookCount] = newBook;
     // Tăng số lượng sách lên 1
@@ -73,11 +64,27 @@ dauSach* timSachTheoTen(DSdauSach* DSDS, string bookName) {
     return nullptr;
 }
 
+// Tim sach theo ID
+Sach* timSachTheoID(DSdauSach* DSDS, string ID){
+    string ISBN = ID;
+    ISBN.pop_back();
+    for (int i = 0; i < DSDS -> bookCount; i++){
+        if (DSDS -> list[i] -> ISBN == ISBN){
+            dauSach* Book = DSDS -> list[i];
+            danhMucSach* bookList = Book -> bookList;
+            return find(bookList, ID);
+        }
+    }
+    return nullptr;
+}
+
 // In thông tin của 1 đầu sách
 void inTTSach(dauSach* book) {
-    if (book != nullptr)
+    if (book != nullptr){
         printf("%-5s | %-15s | %-15s | %-10s | %d |\n", book->ISBN.c_str(), book->bookName.c_str(),
                book->bookAuth.c_str(), book->bookCategory.c_str(), book->publishYear);
+        printBooks(book -> bookList);
+    }
     else
         printf("Sach khong ton tai!\n");
 }

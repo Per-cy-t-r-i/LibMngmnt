@@ -15,7 +15,7 @@ struct docGia {
     int cardState;
 
     // DS các quyển sách đã mượn, trả
-    DSmuonTra borrowList;
+    DSmuonTra* borrowList;
 };
 
 // Node cho cây tìm kiếm nhị phân
@@ -77,6 +77,7 @@ void addMember(DStheDocGia* MemberTree, string lastName, string firstName, bool 
     newNode->data->firstName = firstName;
     newNode->data->gender = gender;
     newNode->data->cardState = 1;
+    newNode -> data -> borrowList = new DSmuonTra();
 
     // Nhập thông tin cho node độc giả
     newNode->ID = MemberTree->size + 1;

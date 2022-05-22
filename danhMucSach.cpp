@@ -19,24 +19,51 @@ struct danhMucSach {
     int bookCount = 0;
 };
 
-// Thêm ID sách vào danh mục
-void addBook(danhMucSach* bookList, int ID) {
+// Thêm một quyển sách vào danh mục sách
+void addBook(danhMucSach* bookList, int state, string place, string ISBN) {
     // Tạo ra 1 quyển sách mới
-    Sach* newBookTemplate = new Sach();
-    newBookTemplate->bookID = ID;
-    newBookTemplate->state = 0;
-    newBookTemplate->place = "None";
+    Sach* newBook = new Sach();
 
-    // Tạo node chứa thông tin quyển sách này
+    newBook -> state = state;
+    newBook -> place = place;
+    
+
     nodeSach* newNode = new nodeSach();
-    newNode->data = newBookTemplate;
+    newNode -> data = newBook;
 
-    // Thêm quyển sách này vào DMS
-    if (bookList->head == nullptr) {
-        bookList->head = newNode;
-        bookList->back = newNode;
-    } else {
-        bookList->back->next = newNode;
-        bookList->back = newNode;
+    if (bookList -> bookCount == 0){
+        bookList -> head = newNode;
+        bookList -> back = newNode;
+    }
+    else{
+        bookList -> back -> next = newNode;
+        bookList -> back = newNode;
+    }
+    newBook -> bookID = ISBN + to_string(bookList -> bookCount);
+    bookList -> bookCount ++;
+}
+
+// Tìm sách theo ID
+Sach* find(danhMucSach* dms, string ID){
+    if (dms -> bookCount == 0)
+        return nullptr;
+
+    nodeSach* ptr = dms -> head;
+    while (ptr != nullptr && ptr -> data -> bookID != ID)
+        ptr = ptr -> next;
+    return ptr -> data;
+}
+
+// In các mã và vị trí sách trong danh mục
+void printBooks(danhMucSach* bookList){
+    if (bookList -> bookCount == 0){
+        printf("Chua co sach nay trong thu vien.\n");
+        return;
+    }
+
+    nodeSach* ptr = bookList -> head;
+    while (ptr){
+        printf("%s: %s: %d\n", ptr -> data -> bookID.c_str(), ptr -> data -> place.c_str(), ptr -> data -> state);
+        ptr = ptr -> next;
     }
 }
