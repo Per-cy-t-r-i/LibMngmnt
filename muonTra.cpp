@@ -1,14 +1,12 @@
 #include "Sach.cpp"
 
-struct date
-{
+struct date {
     int day;
     int month;
     int year;
 };
 
-
-struct sachMuon{
+struct sachMuon {
     std::string bookID;
 
     date borrowDate;
@@ -18,13 +16,13 @@ struct sachMuon{
     // 0: chua tra  || 1: da tra || 2: lam mat
 };
 
-struct nodeSachMuon{
+struct nodeSachMuon {
     sachMuon data;
     nodeSachMuon* prev;
     nodeSachMuon* next;
 };
 
-struct DSmuonTra{
+struct DSmuonTra {
     nodeSachMuon* head;
 
     int bookCount;

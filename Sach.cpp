@@ -2,9 +2,7 @@
 
 #include <string>
 
-
-struct Sach
-{
+struct Sach {
     // ma sach
     std::string bookID;
 
@@ -12,7 +10,4 @@ struct Sach
     // 0: cho muon duoc || 1: da cho muon || 2: da thanh ly
 
     std::string place;
-
 };
-
-
